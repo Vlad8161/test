@@ -8,4 +8,5 @@
     <string name="hint_search">Поиск</string>
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="err_no_speech_recognition_app">У вас отсутствуют приложения для голосового поиска</string>
 </resources>

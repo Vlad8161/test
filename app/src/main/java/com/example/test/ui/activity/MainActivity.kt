@@ -1,13 +1,17 @@
 package com.example.test.ui.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.speech.RecognizerIntent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AlertDialog
@@ -33,6 +37,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : FragmentActivity() {
+    val REQUEST_SPEECH_RECOGNITION = 4
+
     private lateinit var viewModel: MainActivityViewModel
 
     private var offersDisposable: Disposable? = null
@@ -128,6 +134,17 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_SPEECH_RECOGNITION && resultCode == Activity.RESULT_OK) {
+            val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (results != null && results.isNotEmpty()) {
+                search.setSearchFocused(true)
+                search.setSearchText(results[0])
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     private fun initSearchView() {
         search.setSearchText(viewModel.searchQuery ?: "")
 
@@ -168,6 +185,21 @@ class MainActivity : FragmentActivity() {
             override fun onFocus() {
             }
         })
+
+        search.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.btnVoiceSearch -> {
+                    try {
+                        Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                                .also { it.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM) }
+                                .also { it.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.hint_search)) }
+                                .also { startActivityForResult(it, REQUEST_SPEECH_RECOGNITION) }
+                    } catch (e: ActivityNotFoundException) {
+                        Snackbar.make(root, R.string.err_no_speech_recognition_app, Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun subscribeOffers(offers: ConnectableObservable<Model.Result<List<OffersAdapter.Item>>>) {
