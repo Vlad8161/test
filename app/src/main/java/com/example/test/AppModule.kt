@@ -20,6 +20,10 @@ import javax.inject.Singleton
 class AppModule(private val context: Context) {
     @Provides
     @Singleton
+    fun provideApplicationContext(): Context = context
+
+    @Provides
+    @Singleton
     fun provideModel(storage: Storage, serverApi: ServerApi): Model = Model(storage, serverApi)
 
     @Provides

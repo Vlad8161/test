@@ -5,4 +5,7 @@
     <string name="err_unknown">Неизвестная ошибка</string>
     <string name="err_network">Проблемы с подключением</string>
     <string name="err_from_cache">Не удалось загрузить данные из сети, но вы можете посмотреть старые данные</string>
+    <string name="hint_search">Поиск</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
 </resources>

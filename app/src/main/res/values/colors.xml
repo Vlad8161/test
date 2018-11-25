@@ -3,17 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorLtGray">#f7f8f8</color>
-    <color name="bgGroupHeader">#efeff4</color>
-    <color name="bgGroupHeaderBorder">#cdcdcd</color>
-    <color name="textGroupHeader">#646469</color>
-    <color name="bgOfferBtnClear">#ea3223</color>
+    <color name="colorDivider">#cdcdcd</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="textOfferTitle">@color/black</color>
-    <color name="textOfferDescription">#808080</color>
-    <color name="bgStrangeIconColor">#eef3fc</color>
-    <color name="bgDiscountColor">#ee7c78</color>
     <color name="btnFilterTextColorSelected">#588ae9</color>
     <color name="btnFilterTextColorNotSelected">#7b7b7b</color>
 </resources>
